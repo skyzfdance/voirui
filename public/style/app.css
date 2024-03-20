@@ -1,0 +1,114 @@
+html {
+  overflow: hidden;
+  text-size-adjust: 100%;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+::-webkit-scrollbar {
+  width: 7px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(144, 147, 153, 0.3);
+  border-radius: 2px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #b6b7b9;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+#app .app-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#app .app-loading-wrap {
+  position: absolute;
+  top: 50%;
+  transform: translatey(-50%);
+}
+#app .app-loading-logo {
+  width: 96px;
+  display: block;
+  margin: 0 auto 20px;
+}
+#app .app-loading-title {
+  margin-top: 32px;
+  font-size: 30px;
+  line-height: 36px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.85);
+}
+#app .app-loading-dots {
+  text-align: center;
+}
+#app .app-loading-dots .dot {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  margin-top: 30px;
+  font-size: 32px;
+  transform: rotate(45deg);
+  box-sizing: border-box;
+  animation: antRotate 1.2s infinite linear;
+}
+#app .app-loading-dots .dot > i {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: #0065cc;
+  border-radius: 100%;
+  opacity: 30%;
+  transform: scale(0.75);
+  animation: antSpinMove 1s infinite linear alternate;
+  transform-origin: 50% 50%;
+}
+#app .app-loading-dots .dot > i:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+#app .app-loading-dots .dot > i:nth-child(2) {
+  top: 0;
+  right: 0;
+  animation-delay: 0.4s;
+}
+#app .app-loading-dots .dot > i:nth-child(3) {
+  right: 0;
+  bottom: 0;
+  animation-delay: 0.8s;
+}
+#app .app-loading-dots .dot > i:nth-child(4) {
+  bottom: 0;
+  left: 0;
+  animation-delay: 1.2s;
+}
+
+#app span.anticon{
+  font-size: 16px !important;
+}
+
+@keyframes antRotate {
+  to {
+    transform: rotate(405deg);
+  }
+}
+@keyframes antSpinMove {
+  to {
+    opacity: 100%;
+  }
+}
