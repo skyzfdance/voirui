@@ -1,7 +1,7 @@
 import { ThemeEnum } from "/@/enums/appEnum"
 
 /** 设置统一样式前缀 */
-export const PREFIX_CLS = "kyk"
+export const PREFIX_CLS = "voir"
 
 /** 项目主题色 */
 export const PRIMARY_COLOR = "#0960bd"

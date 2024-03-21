@@ -1,5 +1,5 @@
 import type { ProjectConfig, HeaderSetting, MenuSetting, TransitionSetting, MultiTabsSetting } from "/#/config"
-import type { BeforeMiniState } from "/#/store"
+import type { BeforeMiniState, SiteInfo } from "/#/store"
 
 import { defineStore } from "pinia"
 import { ThemeEnum } from "/@/enums/appEnum"
@@ -8,10 +8,11 @@ import { APP_DARK_MODE_KEY, PROJ_CFG_KEY } from "/@/enums/cacheEnum"
 import { mergeWith } from "lodash-es"
 
 interface AppState {
-  darkMode?: ThemeEnum;
-  pageLoading: boolean;
-  projectConfig: ProjectConfig | null;
-  beforeMiniInfo: BeforeMiniState;
+  darkMode?: ThemeEnum
+  pageLoading: boolean
+  projectConfig: ProjectConfig | null
+  beforeMiniInfo: BeforeMiniState
+  siteInfo: SiteInfo | null
 }
 
 export const useAppStore = defineStore({
@@ -21,6 +22,7 @@ export const useAppStore = defineStore({
     pageLoading: false,
     projectConfig: null,
     beforeMiniInfo: {},
+    siteInfo: null,
   }),
   getters: {
     getPageLoading: (state): boolean => state.pageLoading,
@@ -38,6 +40,9 @@ export const useAppStore = defineStore({
     },
     getMultiTabsSetting(): MultiTabsSetting {
       return this.getProjectConfig.multiTabsSetting
+    },
+    getSiteInfo(): SiteInfo {
+      return this.siteInfo || ({} as SiteInfo)
     },
   },
   actions: {

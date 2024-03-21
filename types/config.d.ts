@@ -1,3 +1,10 @@
+/**
+ * @file 项目配置模型
+ * @module types/config
+ * @description 项目配置模型
+ */
+
+
 import { RouterTransitionEnum, ThemeEnum } from "/@/enums/appEnum"
 import { MenuModeEnum, MenuTypeEnum, MixSidebarTriggerEnum, TriggerEnum } from "/@/enums/menuEnum"
 

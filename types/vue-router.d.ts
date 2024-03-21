@@ -1,3 +1,9 @@
+/**
+ * @file vue-router.d.ts
+ * @module types/vue-router
+ * @description Vue Router type declaration
+ */
+
 export {}
 
 declare module "vue-router" {

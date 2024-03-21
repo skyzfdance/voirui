@@ -1,3 +1,9 @@
+/**
+ * @file Vite Configuration
+ * @type {import('vite').UserConfig}
+ * @see https://vitejs.dev/config/
+ */
+
 import { fileURLToPath, URL } from "node:url"
 
 import { defineConfig } from "vite"
@@ -13,21 +19,8 @@ const isProduction = NODE_ENV === "production"
 export default defineConfig({
   base: "./",
   root: fileURLToPath(new URL("./", import.meta.url)),
-  server: {
-    host: true,
-    port: 3075,
-  },
-  plugins: [
-    vue(),
-    vueJsx(),
-    Components({
-      resolvers: [
-        AntDesignVueResolver({
-          importStyle: false,
-        }),
-      ],
-    }),
-  ],
+  server: { host: true, port: 4075 },
+  plugins: [vue(), vueJsx(), Components({ resolvers: [AntDesignVueResolver({ importStyle: false })] })],
   build: {
     minify: isProduction,
     outDir: fileURLToPath(new URL("./dist", import.meta.url)),
@@ -45,19 +38,14 @@ export default defineConfig({
           // "g": ["vue"],
           // "h": ["vue-router"]
         },
-      }
+      },
     },
   },
-  esbuild: {
-    pure: isProduction ? ["debugger", "console.log"] : undefined,
-  },
+  esbuild: { pure: isProduction ? ["debugger", "console.log"] : undefined },
 
   css: {
     preprocessorOptions: {
-      less: {
-        modifyVars: { "@ant-prefix": PREFIX_CLS },
-        javascriptEnabled: true,
-      },
+      less: { modifyVars: { "@ant-prefix": PREFIX_CLS }, javascriptEnabled: true },
     },
   },
   resolve: {

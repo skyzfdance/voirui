@@ -1,7 +1,13 @@
+/**
+ * @file types/global.d.ts
+ * @module types/global
+ * @description: Global type declaration
+ */
+
 import type { PropType as VuePropType } from "vue"
 
 declare global {
-  declare type Nullable<T> = T | null
+  declare type Nullable<T> = T | null | undefined
 
   /** defineEmits */
   declare type EmitType = (event: string, ...args: any[]) => void

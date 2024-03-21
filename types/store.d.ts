@@ -1,3 +1,9 @@
+/**
+ * @file types/store.d.ts
+ * @module types/store
+ * @description 用于存储全局状态模型
+ */
+
 import { MenuModeEnum, MenuTypeEnum } from "/@/enums/menuEnum"
 import { SizeType } from "/@/components/Table/types/table"
 
@@ -15,6 +21,12 @@ export interface BeforeMiniState {
  */
 export interface UserInfo {}
 
+
+/** 站点信息模型 */
+export interface SiteInfo {
+  logo: string;
+  siteName: string;
+}
 
 /** 表格组件工具栏配置模型 */
 export interface TableSetting {

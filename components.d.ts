@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AppDarkModeToggle: typeof import('./src/components/Application/AppDarkModeToggle.vue')['default']
     AppLogo: typeof import('./src/components/Application/AppLogo.vue')['default']
     AppProvider: typeof import('./src/components/Application/AppProvider.vue')['default']
     BasicHelp: typeof import('./src/components/Basic/BasicHelp.vue')['default']
