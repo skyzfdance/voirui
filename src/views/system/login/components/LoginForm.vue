@@ -1,11 +1,11 @@
 <template>
   <LoginFormTitle v-show="getShow" />
-  <Form class="p-4 enter-x" v-show="getShow">
+  <Form class="p-4 enter-x" v-show="getShow" :model="formData" :rules="rules" @finish="handlelogin">
     <FormItem name="account" class="enter-x">
-      <Input v-model:value="formData.account" size="large" placeholder="请输入登录账户" />
+      <Input v-model:value="formData.account" size="large" allow-clear placeholder="请输入登录账户" />
     </FormItem>
     <FormItem name="password" class="enter-x">
-      <InputPassword v-model:value="formData.password" size="large" placeholder="请输入登录密码" visibility-toggle />
+      <InputPassword v-model:value="formData.password" size="large" allow-clear placeholder="请输入登录密码" visibility-toggle />
     </FormItem>
 
     <div class="flex justify-between mb-6 enter-x">
@@ -14,7 +14,7 @@
     </div>
 
     <FormItem class="enter-x">
-      <Button type="primary" size="large" block :loading="loading">登录</Button>
+      <Button type="primary" size="large" block html-type="submit" :loading="loading">登录</Button>
     </FormItem>
 
     <Row class="enter-x" :gutter="[16, 16]">
@@ -32,6 +32,7 @@
 </template>
 
 <script setup lang="ts">
+  import { type Rule } from "ant-design-vue/es/form/interface"
   import { computed, ref, unref } from "vue"
   import LoginFormTitle from "./LoginFormTitle.vue"
   import { LoginStateEnum, useLogin } from "../useLogin"
@@ -43,4 +44,19 @@
   const rememberMe = ref(false)
   const loading = ref(false)
   const getShow = computed(() => unref(getCurrentState) === LoginStateEnum.LOGIN)
+
+  const rules: Record<string, Rule[]> = {
+    account: [{ required: true, message: "请输入登录账户", trigger: "blur" }],
+    password: [{ required: true, message: "请输入登录账户", trigger: "blur" }],
+  }
+
+  async function handlelogin() {
+    try {
+      loading.value = true
+    } catch (error) {
+      console.error("login error")
+    } finally {
+      loading.value = false
+    }
+  }
 </script>

@@ -14,10 +14,13 @@ export const PREFIX_CLS = "voir"
 export const PRIMARY_COLOR = "#0960bd"
 
 /** 项目默认主题 */
-export const darkMode = ThemeEnum.LIGHT
+export const DEFAULT_THEME_MODE = ThemeEnum.LIGHT
 
 /** 项目默认缓存时间 */
 export const DEFAULT_CACHE_TIME = 60 * 60 * 24 * 7
+
+/** 项目默认缓存位置 */
+export const CACHE_LOCATION = localStorage
 
 /** 项目默认配置 */
 export const PROJ_CFG: ProjectConfig = {
@@ -25,10 +28,10 @@ export const PROJ_CFG: ProjectConfig = {
   themeColor: PRIMARY_COLOR,
   // @ts-ignore
   headerSetting: {},
-   // @ts-ignore
+  // @ts-ignore
   menuSetting: {},
-   // @ts-ignore
+  // @ts-ignore
   transitionSetting: {},
-   // @ts-ignore
+  // @ts-ignore
   multiTabsSetting: {},
 }

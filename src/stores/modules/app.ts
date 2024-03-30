@@ -3,9 +3,10 @@ import type { BeforeMiniState, SiteInfo } from "/#/store"
 
 import { defineStore } from "pinia"
 import { ThemeEnum } from "/@/enums/appEnum"
-import { darkMode } from "/@/config/project"
-import { APP_DARK_MODE_KEY, PROJ_CFG_KEY } from "/@/enums/cacheEnum"
+import { DEFAULT_THEME_MODE } from "/@/config/project"
+import { CacheTypeEnum } from "/@/enums/cacheEnum"
 import { merge } from "lodash-es"
+import { getCache, setCache } from "/@/utils/cache"
 
 interface AppState {
   darkMode?: ThemeEnum
@@ -28,7 +29,7 @@ export const useAppStore = defineStore({
     /** 获取页面 loading 状态 */
     getPageLoading: (state): boolean => state.pageLoading,
     /** 获取当前项目主题(浅色与暗色) */
-    getDarkMode: (state): ThemeEnum | String => state.darkMode || localStorage.getItem(APP_DARK_MODE_KEY) || darkMode,
+    getDarkMode: (state): ThemeEnum | String => state.darkMode || getCache(CacheTypeEnum.APP_DARK_MODE_KEY) || DEFAULT_THEME_MODE,
 
     getBeforeMiniInfo: (state): BeforeMiniState => state.beforeMiniInfo,
     /** 获取当前项目配置 */
@@ -53,7 +54,7 @@ export const useAppStore = defineStore({
      */
     setDarkMode(mode: ThemeEnum): void {
       this.darkMode = mode
-      localStorage.setItem(APP_DARK_MODE_KEY, mode)
+      setCache(CacheTypeEnum.APP_DARK_MODE_KEY, mode)
     },
     /**
      * 设置切换为迷你状态的当前页面状态
@@ -69,8 +70,7 @@ export const useAppStore = defineStore({
     setProjectConfig(config: Partial<ProjectConfig>): void {
       this.projectConfig = merge<Partial<ProjectConfig>, Partial<ProjectConfig>>(this.projectConfig, config)
 
-      // TODO 写入缓存
-      // Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig)
+      setCache(CacheTypeEnum.PROJ_CFG_KEY, this.projectConfig)
     },
   },
 })
