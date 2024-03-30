@@ -6,7 +6,7 @@
 import type { ProjectConfig } from "/#/config"
 import { useAppStore } from "/@/stores/modules/app"
 import { merge } from "lodash-es"
-import { PROJ_CFG, DEFAULT_CACHE_TIME } from "/@/config/project"
+import { PROJ_CFG, DEFAULT_CACHE_TIME, PREFIX_CLS } from "/@/config/project"
 import { type CacheType, getCache } from "../utils/cache"
 import { CacheTypeEnum } from "/@/enums/cacheEnum"
 import pack from "../../package.json"
@@ -19,7 +19,7 @@ export function initAppConfigStore(): void {
 
   appStore.setProjectConfig(projCfg)
 
-    // TODO 未完成
+  // TODO 未完成
 
   setTimeout(() => {
     clearObsoleteStorage()
@@ -28,7 +28,7 @@ export function initAppConfigStore(): void {
 
 /** 清理过期缓存 */
 export function clearObsoleteStorage() {
-  const VITE_APP_TITLE = import.meta.env.VITE_APP_TITLE
+  const VITE_APP_TITLE = PREFIX_CLS.toUpperCase()
   const version = pack.version
 
   ;[localStorage, sessionStorage].forEach((item) => {

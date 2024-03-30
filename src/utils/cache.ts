@@ -4,10 +4,11 @@
  * @description 本地缓存工具
  */
 
-import { CacheTypeEnum } from "/@/enums/cacheEnum"
+import { CacheTypeEnum, CacheLocationEnum } from "/@/enums/cacheEnum"
 import pack from "../../package.json"
 import { CACHE_LOCATION } from "/@/config/project"
 import { isNull } from "lodash-es"
+import { PREFIX_CLS } from "../config/project"
 
 export interface CacheType {
   version: string
@@ -17,8 +18,8 @@ export interface CacheType {
 
 /** 生成缓存键 */
 function generateCaheKey(): string {
-  // .env  VITE_APP_TITLE
-  const VITE_APP_TITLE = import.meta.env.VITE_APP_TITLE
+  // 项目前缀
+  const VITE_APP_TITLE = PREFIX_CLS.toUpperCase()
   // 系统版本号
   const version = pack.version
 
@@ -29,7 +30,7 @@ function generateCaheKey(): string {
  * 生成缓存
  * @param {Storage} storage - 缓存存储对象
  */
-export function generateCahe(storage: Storage = CACHE_LOCATION) {
+function generateCahe(storage: Storage = localStorage) {
   const cache = storage.getItem(generateCaheKey())
   if (!cache) {
     storage.setItem(
@@ -44,21 +45,12 @@ export function generateCahe(storage: Storage = CACHE_LOCATION) {
 }
 
 /**
- * 写入缓存
- * @param key 需要写入的缓存key
- * @param value 需要写入的缓存value
+ * 设置缓存
+ * @param key 需要设置的缓存key
+ * @param value 需要设置的缓存value
  */
 export function setCache(key: CacheTypeEnum, value: any) {
-  let cache = CACHE_LOCATION.getItem(generateCaheKey())
-  if (isNull(cache)) {
-    generateCahe()
-    // 重新获取缓存
-    cache = CACHE_LOCATION.getItem(generateCaheKey())
-  }
-
-  const parseCache: CacheType = JSON.parse(cache!)
-  Reflect.set(parseCache.data, key, value)
-  CACHE_LOCATION.setItem(generateCaheKey(), JSON.stringify(parseCache))
+  _setCache(key, value, CACHE_LOCATION === CacheLocationEnum.LOCAL ? localStorage : sessionStorage)
 }
 
 /**
@@ -67,12 +59,7 @@ export function setCache(key: CacheTypeEnum, value: any) {
  * @param def 如果没有获取到缓存，返回的默认值
  */
 export function getCache(key: CacheTypeEnum, def = null) {
-  const cache = CACHE_LOCATION.getItem(generateCaheKey())
-  if (!cache) return def
-
-  const parseCache: CacheType = JSON.parse(cache)
-
-  return Reflect.get(parseCache.data, key) || def
+  return _getCache(key, def, CACHE_LOCATION === CacheLocationEnum.LOCAL ? localStorage : sessionStorage)
 }
 
 /**
@@ -80,18 +67,54 @@ export function getCache(key: CacheTypeEnum, def = null) {
  * @param key 需要移除的缓存key
  */
 export function removeCache(key: CacheTypeEnum) {
-  const cache = CACHE_LOCATION.getItem(generateCaheKey())
+  _removeCache(key, CACHE_LOCATION === CacheLocationEnum.LOCAL ? localStorage : sessionStorage)
+}
+
+/** 重置缓存 */
+export function clearCache() {
+  _clearCache(CACHE_LOCATION === CacheLocationEnum.LOCAL ? localStorage : sessionStorage)
+}
+
+/** 刷新缓存 */
+export function resetCache() {
+  _resetCache(CACHE_LOCATION === CacheLocationEnum.LOCAL ? localStorage : sessionStorage)
+}
+
+/** ===== 以下为实际操作方法，localStorage 和 sessionStorage 为特殊变量，无法复制给变量，只能通过复写方法实现 ===== */
+
+function _setCache(key: CacheTypeEnum, value: any, storage: Storage) {
+  let cache = storage.getItem(generateCaheKey())
+  if (isNull(cache)) {
+    generateCahe(storage)
+    // 重新获取缓存
+    cache = storage.getItem(generateCaheKey())
+  }
+
+  const parseCache: CacheType = JSON.parse(cache!)
+  Reflect.set(parseCache.data, key, value)
+  storage.setItem(generateCaheKey(), JSON.stringify(parseCache))
+}
+
+function _getCache(key: CacheTypeEnum, def = null, storage: Storage) {
+  const cache = storage.getItem(generateCaheKey())
+  if (isNull(cache)) return def
+
+  const parseCache: CacheType = JSON.parse(cache)
+  return Reflect.get(parseCache.data, key) || def
+}
+
+function _removeCache(key: CacheTypeEnum, storage: Storage) {
+  const cache = storage.getItem(generateCaheKey())
   if (!cache) return
 
   const parseCache: CacheType = JSON.parse(cache)
   Reflect.deleteProperty(parseCache.data, key)
 
-  CACHE_LOCATION.setItem(generateCaheKey(), JSON.stringify(parseCache))
+  storage.setItem(generateCaheKey(), JSON.stringify(parseCache))
 }
 
-/** 重置缓存 */
-export function clearCache() {
-  CACHE_LOCATION.setItem(
+function _clearCache(storage: Storage) {
+  storage.setItem(
     generateCaheKey(),
     JSON.stringify({
       version: pack.version,
@@ -101,9 +124,8 @@ export function clearCache() {
   )
 }
 
-/** 刷新缓存 */
-export function resetCache() {
-  const cache = CACHE_LOCATION.getItem(generateCaheKey())
+function _resetCache(storage: Storage) {
+  const cache = storage.getItem(generateCaheKey())
   if (!cache) return
 
   // 重置缓存生成时间
@@ -111,5 +133,5 @@ export function resetCache() {
   parseCache.createTime = Date.now()
 
   // 写入缓存
-  CACHE_LOCATION.setItem(generateCaheKey(), JSON.stringify(parseCache))
+  storage.setItem(generateCaheKey(), JSON.stringify(parseCache))
 }
