@@ -5,12 +5,12 @@ import { defineStore } from "pinia"
 import { ThemeEnum } from "/@/enums/appEnum"
 import { darkMode } from "/@/config/project"
 import { APP_DARK_MODE_KEY, PROJ_CFG_KEY } from "/@/enums/cacheEnum"
-import { mergeWith } from "lodash-es"
+import { merge } from "lodash-es"
 
 interface AppState {
   darkMode?: ThemeEnum
   pageLoading: boolean
-  projectConfig: ProjectConfig | null
+  projectConfig: Partial<ProjectConfig>
   beforeMiniInfo: BeforeMiniState
   siteInfo: SiteInfo | null
 }
@@ -20,30 +20,24 @@ export const useAppStore = defineStore({
   state: (): AppState => ({
     darkMode: undefined,
     pageLoading: false,
-    projectConfig: null,
+    projectConfig: {},
     beforeMiniInfo: {},
     siteInfo: null,
   }),
   getters: {
+    /** 获取页面 loading 状态 */
     getPageLoading: (state): boolean => state.pageLoading,
+    /** 获取当前项目主题(浅色与暗色) */
     getDarkMode: (state): ThemeEnum | String => state.darkMode || localStorage.getItem(APP_DARK_MODE_KEY) || darkMode,
+
     getBeforeMiniInfo: (state): BeforeMiniState => state.beforeMiniInfo,
-    getProjectConfig: (state): ProjectConfig => state.projectConfig || ({} as ProjectConfig),
-    getHeaderSetting(): HeaderSetting {
-      return this.getProjectConfig.headerSetting
-    },
-    getMenuSetting(): MenuSetting {
-      return this.getProjectConfig.menuSetting
-    },
-    getTransitionSetting(): TransitionSetting {
-      return this.getProjectConfig.transitionSetting
-    },
-    getMultiTabsSetting(): MultiTabsSetting {
-      return this.getProjectConfig.multiTabsSetting
-    },
-    getSiteInfo(): SiteInfo {
-      return this.siteInfo || ({} as SiteInfo)
-    },
+    /** 获取当前项目配置 */
+    getProjectConfig: (state): Partial<ProjectConfig> => state.projectConfig,
+    getHeaderSetting: (state): HeaderSetting => state.projectConfig?.headerSetting || ({} as HeaderSetting),
+    getMenuSetting: (state): MenuSetting => state.projectConfig?.menuSetting || ({} as MenuSetting),
+    getTransitionSetting: (state): TransitionSetting => state.projectConfig?.transitionSetting || ({} as TransitionSetting),
+    getMultiTabsSetting: (state): MultiTabsSetting => state.projectConfig?.multiTabsSetting || ({} as MultiTabsSetting),
+    getSiteInfo: (state): SiteInfo => state.siteInfo || ({} as SiteInfo),
   },
   actions: {
     /**
@@ -72,9 +66,11 @@ export const useAppStore = defineStore({
      * 设置项目配置
      * @param config
      */
-    setProjectConfig(config: DeepPartial<ProjectConfig>): void {
-      this.projectConfig = mergeWith(this.projectConfig || {}, config)
-      Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig)
+    setProjectConfig(config: Partial<ProjectConfig>): void {
+      this.projectConfig = merge<Partial<ProjectConfig>, Partial<ProjectConfig>>(this.projectConfig, config)
+
+      // TODO 写入缓存
+      // Persistent.setLocal(PROJ_CFG_KEY, this.projectConfig)
     },
   },
 })

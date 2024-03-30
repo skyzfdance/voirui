@@ -89,8 +89,12 @@ export interface MultiTabsSetting {
 }
 
 
-/** 项目配置模型 */
+/** 项目基础配置模型 */
 export interface ProjectConfig {
+  /** 项目默认主题 */
+  theme: ThemeEnum;
+  /** 项目主题色 */
+  themeColor: string;
   headerSetting: HeaderSetting;
   menuSetting: MenuSetting;
   transitionSetting: TransitionSetting;

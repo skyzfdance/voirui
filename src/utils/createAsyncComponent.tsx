@@ -1,3 +1,10 @@
+/**
+ * @file 创建异步组件加载器
+ * @module utils/createAsyncComponent
+ */
+
+// TODO: 当前未通过测试用例，不知道如何编写测试用例
+
 import { type AsyncComponentLoader, type Component, type ComponentPublicInstance, defineAsyncComponent } from "vue"
 
 import { Spin } from "ant-design-vue"
@@ -18,7 +25,7 @@ interface Options {
    * @default false
    */
   loading?: boolean
-  /** 
+  /**
    * 是否需要进入重试机制
    * @default true
    */
@@ -29,7 +36,7 @@ interface Options {
  * 创建异步组件加载器
  * @param loader 需要加载的组件
  * @param options 加载配置
- * @returns 
+ * @returns
  */
 export function createAsyncComponent<
   T extends Component = {
@@ -42,12 +49,14 @@ export function createAsyncComponent<
     loader,
     loadingComponent: loading ? <Spin spinning={true} size={size} /> : undefined,
     delay,
-    onError: !retry ? () => {} : (error, retry, fail, attempts) => {
-      if (error.message.match(/fetch/) && attempts <= 3) {
-        retry()
-      } else {
-        fail()
-      }
-    },
+    onError: !retry
+      ? () => {}
+      : (error, retry, fail, attempts) => {
+          if (error.message.match(/fetch/) && attempts <= 3) {
+            retry()
+          } else {
+            fail()
+          }
+        },
   })
 }

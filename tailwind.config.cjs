@@ -6,6 +6,7 @@
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+  darkMode: ["selector", '[data-theme="dark"]'],
   theme: {
     extend: {
       textColor: {
@@ -18,7 +19,7 @@ module.exports = {
         primary: "#0960bd",
       },
       lineHeight: {
-        '0': '0',
+        0: "0",
       },
     },
   },

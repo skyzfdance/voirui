@@ -28,13 +28,9 @@
   const go = useGo()
   const appStore = useAppStore()
 
-  const getLogo = computed(() => {
-    return defaultLogo
-  })
+  const getLogo = computed(() => appStore.getSiteInfo?.logo ?? defaultLogo)
 
-  const getTitle = computed(() => {
-    return appStore.getSiteInfo?.siteName ?? import.meta.env.VITE_APP_TITLE
-  })
+  const getTitle = computed(() => appStore.getSiteInfo?.siteName ?? import.meta.env.VITE_APP_TITLE)
 
   const getAppLogoClass = computed(() => [prefixCls, props.theme])
 

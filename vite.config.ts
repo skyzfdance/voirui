@@ -55,4 +55,8 @@ export default defineConfig({
       "/&": fileURLToPath(new URL("./build", import.meta.url)),
     },
   },
+  test: {
+    globals: true,
+    environment: "jsdom",
+  },
 })
