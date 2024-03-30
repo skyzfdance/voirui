@@ -9,15 +9,7 @@ module.exports = {
   darkMode: ["selector", '[data-theme="dark"]'],
   theme: {
     extend: {
-      textColor: {
-        primary: "#0960bd",
-      },
-      borderColor: {
-        primary: "#0960bd",
-      },
-      backgroundColor: {
-        primary: "#0960bd",
-      },
+      colors: { primary: "#0960bd" },
       lineHeight: {
         0: "0",
       },
