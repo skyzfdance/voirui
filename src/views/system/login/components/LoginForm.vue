@@ -1,6 +1,6 @@
 <template>
   <LoginFormTitle v-show="getShow" />
-  <Form class="p-4 enter-x" v-show="getShow" :model="formData" :rules="rules" @finish="handlelogin">
+  <Form class="p-4 enter-x" v-if="getShow" :model="formData" :rules="rules" @finish="handlelogin">
     <FormItem name="account" class="enter-x">
       <Input v-model:value="formData.account" size="large" allow-clear placeholder="请输入登录账户" />
     </FormItem>
@@ -9,7 +9,7 @@
     </FormItem>
 
     <div class="flex justify-between mb-6 enter-x">
-      <Checkbox v-model:checked="rememberMe">记住账号</Checkbox>
+      <Checkbox v-model:checked="memory">记住账号</Checkbox>
       <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">忘记密码？</Button>
     </div>
 
@@ -33,15 +33,18 @@
 
 <script setup lang="ts">
   import { type Rule } from "ant-design-vue/es/form/interface"
-  import { computed, ref, unref } from "vue"
+  import { computed, onMounted, ref, unref } from "vue"
   import LoginFormTitle from "./LoginFormTitle.vue"
   import { LoginStateEnum, useLogin } from "../useLogin"
   import { Form, FormItem, Row, Col, Button, Input, InputPassword, Checkbox } from "ant-design-vue"
+  import { getCache, removeCache, setCache } from "/@/utils/cache"
+  import { CacheTypeEnum } from "/@/enums/cacheEnum"
+  import { isObject } from "lodash-es"
 
   const { getCurrentState, setLoginState } = useLogin()
 
   const formData = ref({ account: "", password: "" })
-  const rememberMe = ref(false)
+  const memory = ref(false)
   const loading = ref(false)
   const getShow = computed(() => unref(getCurrentState) === LoginStateEnum.LOGIN)
 
@@ -50,9 +53,24 @@
     password: [{ required: true, message: "请输入登录账户", trigger: "blur" }],
   }
 
+  onMounted(() => {
+    const accountCache = getCache(CacheTypeEnum.MEMORY_ACCOUNT_KEY)
+    if (accountCache && isObject(accountCache)) {
+      for (const key in accountCache) {
+        if (Object.prototype.hasOwnProperty.call(accountCache, key)) {
+          const element = accountCache[key]
+          formData.value[key] = element
+        }
+      }
+      memory.value = Object.keys(accountCache).length > 0
+    }
+  })
+
   async function handlelogin() {
     try {
       loading.value = true
+      // 记录账号 或者 删除记录
+      unref(memory) ? setCache(CacheTypeEnum.MEMORY_ACCOUNT_KEY, { account: unref(formData).account }) : removeCache(CacheTypeEnum.MEMORY_ACCOUNT_KEY)
     } catch (error) {
       console.error("login error")
     } finally {

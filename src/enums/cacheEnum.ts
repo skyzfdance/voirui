@@ -7,6 +7,7 @@ export enum CacheTypeEnum {
   ROLES_KEY = "ROLES__KEY__",
   MULTIPLE_TABS_KEY = "MULTIPLE_TABS__KEY__",
   TABLE_SETTING_KEY = "TABLE__SETTING",
+  MEMORY_ACCOUNT_KEY = "MEMORY__ACCOUNT__KEY__",
 }
 /** 缓存位置枚举 */
 export enum CacheLocationEnum {
