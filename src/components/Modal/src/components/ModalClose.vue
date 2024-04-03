@@ -2,10 +2,10 @@
   <div :class="getClass" class="flex items-center h-[95%]">
     <template v-if="canFullscreen">
       <Tooltip title="还原" placement="bottom" v-if="fullScreen">
-        <FullscreenExitOutlined @click="handleFullScreen" />
+        <FullscreenExitOutlined role="full" @click="handleFullScreen" />
       </Tooltip>
       <Tooltip title="最大化" placement="bottom" v-else>
-        <FullscreenOutlined @click="handleFullScreen" />
+        <FullscreenOutlined role="close" @click="handleFullScreen" />
       </Tooltip>
     </template>
 
@@ -17,10 +17,10 @@
 
 <script setup lang="ts">
   import { computed } from "vue"
-  import { PREFIX_CLS } from "/@/config/project"
 
   import { Tooltip } from "ant-design-vue"
   import { FullscreenExitOutlined, FullscreenOutlined, CloseOutlined } from "@ant-design/icons-vue"
+  import { buildClass } from "/@/hooks/useClass"
 
   defineOptions({ inheritAttrs: false, name: "ModalClose" })
 
@@ -30,8 +30,10 @@
     /** 当前全屏状态 */
     fullScreen: { type: Boolean, default: false },
   })
+
   const emits = defineEmits(["cancel", "fullscreen"])
-  const prefixCls = PREFIX_CLS + "-basic-modal-close"
+
+  const prefixCls = buildClass("basic-modal-close")
 
   const getClass = computed(() => {
     return [prefixCls, `${prefixCls}--custom`, { [`${prefixCls}--can-full`]: props.canFullscreen }]

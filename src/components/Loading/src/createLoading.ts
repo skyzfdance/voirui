@@ -6,9 +6,19 @@ import { Loading } from ".."
  * 动态创建 Loading 组件
  * @param props LoadingProps
  * @param target 加载节点
- * @param wait 是否需要延迟加载
+ * @param wait 是否需要延迟加载，如果在 setup 中使用，必须需要延迟加载
  */
-export function createLoading(props?: Partial<LoadingProps>, target?: HTMLElement, wait = false) {
+export function createLoading(
+  props?: Partial<LoadingProps>,
+  target?: HTMLElement,
+  wait = false,
+): {
+  open: () => void
+  close: () => void
+  setTip: (tip: string) => void
+  setLoading: (loading: boolean) => void
+  setOptions: (options: Partial<LoadingProps>) => void
+} {
   let instance: Nullable<VNode> = null
 
   const data = reactive({
@@ -30,10 +40,8 @@ export function createLoading(props?: Partial<LoadingProps>, target?: HTMLElemen
   instance = createVNode(LoadingWrap)
 
   if (wait) {
-    // XXX 如果设计在 setup 中使用，需要延迟加载，有可能存在 async setup 的情况
-    // XXX onMounted is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
     setTimeout(() => {
-      render(instance, document.createElement("div"))
+      render(instance!, document.createElement("div"))
     }, 0)
   } else {
     render(instance, document.createElement("div"))

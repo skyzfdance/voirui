@@ -7,31 +7,30 @@ import { createLoading } from "/@/components/Loading"
 
 const loadingDirective: Directive = {
   mounted(el, binding) {
-    const tips = el.getAttribute("loading-tips") || "加载中..."
-    const background = el.getAttribute("loading-background") || "rgba(0, 0, 0, 0.7)"
-    const size = el.getAttribute("loading-size") || "30px"
-    const fullscreen = !!binding.modifiers.fullscreen
+    const tips = el.getAttribute("loading-tips") || "数据加载中..."
+    const background = el.getAttribute("loading-background")
+    const size = el.getAttribute("loading-size")
+    const fullscreen = el.getAttribute("loading-absolute") || !!binding.modifiers.fullscreen
+    const teleport = el.getAttribute("loading-teleport")
 
     const instance = createLoading(
       {
         tips,
         background,
-        size,
+        size: size || "large",
         loading: !!binding.value,
         absolute: !fullscreen,
       },
-      fullscreen ? document.body : el,
-      true,
+      teleport ? el : document.body,
     )
-
     el.instance = instance
   },
   updated(el, binding) {
     const instance = el.instance
     if (!instance) return
-    instance.setTip(el.getAttribute("loading-tips") || "加载中...")
+    instance.setTip(el.getAttribute("loading-tips") || "数据加载中...")
     if (binding.oldValue !== binding.value) {
-      instance.setLoading(!!binding.value)
+      instance.setLoading(binding.value && !instance.loading)
     }
   },
   unmounted(el) {

@@ -63,6 +63,12 @@ const modalProps = {
   loading: { type: Boolean, default: false },
   /** 加载状态提示信息 */
   loadingTip: { type: String, default: "加载中..." },
+  /** 自定义关闭事件，根据返回状态，判定当前弹窗是否关闭 */
+  customClose: { type: Function as PropType<() => Promise<boolean>> },
+  /** 是否显示确认按钮 */
+  showOkBtn: { type: Boolean, default: true },
+  /** 是否显示取消按钮 */
+  showCancelBtn: { type: Boolean, default: true },
 }
 
 export const basicProps = Object.assign({}, defaultProps, modalProps)

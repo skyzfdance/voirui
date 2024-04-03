@@ -3,12 +3,12 @@
     <BackTop :target="getTarget" />
     <RouterView>
       <template #default="{ Component, route }">
-        <Transition name="fade-slide" mode="out-in" appear>
+        <!-- <Transition name="fade-slide" mode="out-in" appear> -->
           <KeepAlive v-if="openCache" :include="getCaches">
             <component :is="Component" :key="route.fullPath" />
           </KeepAlive>
           <component v-else :is="Component" :key="route.fullPath" />
-        </Transition>
+        <!-- </Transition> -->
       </template>
     </RouterView>
   </div>

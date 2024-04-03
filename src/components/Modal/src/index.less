@@ -1,0 +1,55 @@
+@prefix-cls: @ant-prefix;
+
+.@{prefix-cls}-modal {
+  width: 520px;
+  padding-bottom: 0;
+  &-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  &-header {
+    @apply border-b border-solid border-gray-200 p-4;
+  }
+
+  &-content {
+    padding: 0 !important;
+  }
+
+  &-footer {
+    @apply border-t border-solid border-gray-200 p-4;
+  }
+
+  &-close {
+    top: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+    outline: none;
+    background-color: transparent !important;
+    font-weight: normal;
+    &-x {
+      display: inline-block;
+      width: 96px;
+      height: 56px;
+      line-height: 56px !important;
+    }
+  }
+}
+
+.fullscreen-modal {
+  overflow: hidden;
+  .@{prefix-cls}-modal {
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+
+    &-content {
+      height: 100% !important;
+      overflow: hidden;
+    }
+
+    &-footer {
+      margin-top: 0;
+    }
+  }
+}

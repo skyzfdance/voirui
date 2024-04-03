@@ -6,7 +6,10 @@ import { LoadingProps } from "./typing"
  * @param opts
  * @param target
  */
-export function useLoading(props?: Partial<LoadingProps>, target?: HTMLElement) {
+export function useLoading(
+  props: Partial<LoadingProps> = {},
+  target: HTMLElement = document.body,
+): [open: () => void, close: () => void, setTip: (tip: string) => void] {
   const instance = createLoading(props, target, true)
 
   function open() {
