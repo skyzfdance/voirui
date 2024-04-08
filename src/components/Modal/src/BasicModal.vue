@@ -1,21 +1,35 @@
 <template>
   <Modal v-bind="getBindValue" :class="prefixCls" @cancel="handleCancel">
     <template #closeIcon v-if="!$slots.closeIcon">
-      <ModalClose :canFullscreen="getProps.canFullscreen" :fullScreen="fullScreenRef" @cancel="handleCancel" @fullscreen="handleFullScreen" />
+      <ModalClose :canFullscreen="mergeProps.canFullscreen" :fullScreen="fullScreenRef" @cancel="handleCancel" @fullscreen="handleFullScreen" />
     </template>
 
     <template #title v-if="!$slots.title">
-      <ModalHeader :helpMessage="getProps.helpMessage" :title="mergeProps.title" />
+      <ModalHeader :helpMessage="mergeProps.helpMessage" :title="mergeProps.title" />
     </template>
 
     <template #footer v-if="!$slots.footer">
-      <!-- 自定义底部 -->
       <ModalFooter v-bind="getBindValue" @ok="(e) => emits('ok', e)" @cancel="handleCancel">
         <template #[item]="data" v-for="item in Object.keys($slots)">
           <slot :name="item" v-bind="data || {}"></slot>
         </template>
       </ModalFooter>
     </template>
+
+    <ModalWrapper
+      ref="modalWrapperRef"
+      :loading="mergeProps.loading"
+      :loading-tips="mergeProps.loadingTip"
+      :open="openRef"
+      :min-height="mergeProps.minHeight"
+      :full-screen="fullScreenRef"
+      :height="mergeProps.height"
+      :modal-footer-height="!footer ? 0 : 65"
+      @height-change="(height: number) => emits('height-change', height)"
+      @ext-height="(height: number) => (extHeightRef = height)"
+    >
+      <slot></slot>
+    </ModalWrapper>
 
     <template #[item]="data" v-for="item in Object.keys(omit($slots, 'default'))">
       <slot :name="item" v-bind="data || {}"></slot>
@@ -35,16 +49,24 @@
   import ModalClose from "./components/ModalClose.vue"
   import ModalHeader from "./components/ModalHeader.vue"
   import ModalFooter from "./components/ModalFooter.vue"
+  import ModalWrapper from "./components/ModalWrapper.vue"
 
   defineOptions({ inheritAttrs: false, name: "BasicModal" })
 
   const attrs = useAttrs()
   const instance = getCurrentInstance()
   const props = defineProps({ ...basicProps })
-  const emits = defineEmits(["cancel", "register", "ok", "open-change", "update:open", "fullscreen"])
+  const emits = defineEmits(["cancel", "register", "ok", "open-change", "update:open", "fullscreen", "height-change"])
   const prefixCls = buildClass("basic-modal")
 
-  const modalMethods: ModalMethods = { setModalProps }
+  const modalMethods: ModalMethods = {
+    setModalProps,
+    redoModalHeight: () => {
+      nextTick(() => {
+        unref(modalWrapperRef)?.setModalHeight()
+      })
+    },
+  }
 
   instance && emits("register", modalMethods, instance.uid)
 
@@ -52,7 +74,9 @@
 
   const openRef = ref(false)
   const propsRef = ref<Partial<ModalProps> | null>(null)
-  const modalWrapperRef = ref<any>(null) // 弹窗总部实例
+  const modalWrapperRef = ref<InstanceType<typeof ModalWrapper> | null>(null)
+
+  const extHeightRef = ref(0)
 
   const mergeProps = computed(() => ({ ...props, ...(unref(propsRef) || {}) }))
 
@@ -72,21 +96,6 @@
     return omit(attr, ["title"])
   })
 
-  /**
-   * 获取完整的props
-   * @description 但是这里需要过滤到，okButtonProps、cancelButtonProps、title，模拟的Modal组件的行为，不需要用到这个
-   */
-  const getProps = computed((): Recordable => {
-    const opt = {
-      ...unref(mergeProps),
-      open: unref(openRef),
-      okButtonProps: undefined,
-      cancelButtonProps: undefined,
-      title: undefined,
-    }
-    return { ...opt, wrapClassName: unref(wrapClassName) }
-  })
-
   watchEffect(() => {
     openRef.value = !!props.open
     fullScreenRef.value = !!props.defaultFullscreen
@@ -97,6 +106,11 @@
     (val) => {
       emits("open-change", val)
       emits("update:open", val)
+      nextTick(() => {
+        if (val && unref(modalWrapperRef)) {
+          unref(modalWrapperRef)?.setModalHeight()
+        }
+      })
     },
     { immediate: true },
   )

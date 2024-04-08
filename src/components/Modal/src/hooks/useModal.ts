@@ -59,6 +59,9 @@ export function useModal(): useModalReturnType {
     closeModal: () => {
       getInstance()?.setModalProps({ open: false })
     },
+    redoModalHeight: () => {
+      getInstance()?.redoModalHeight?.()
+    },
   }
 
   return [register, methods]
@@ -110,7 +113,10 @@ export function useModalInner(callbackFn?: (...arg) => void): useInnerModalRetur
     changeConfirmLoading: (loading) => {
       getInstance()?.setModalProps({ confirmLoading: loading })
     },
-    redoModalHeight: () => {},
+    redoModalHeight: () => {
+      const callRedo = getInstance()?.redoModalHeight
+      callRedo && callRedo()
+    },
   }
 
   return [register, methods]

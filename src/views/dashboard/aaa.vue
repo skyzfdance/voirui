@@ -3,6 +3,8 @@
     width="800px"
     title="123123123"
     :help-message="['测试help-messagh', '测试机阿萨德刚与阿是', 'asdgausdgas']"
+    :footer="null"
+    height="500px"
     @register="registerModal"
     @ok="handleSubmit"
   >

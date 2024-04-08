@@ -10,6 +10,7 @@ declare module 'vue' {
     AppDarkModeToggle: typeof import('./src/components/Application/AppDarkModeToggle.vue')['default']
     AppLogo: typeof import('./src/components/Application/AppLogo.vue')['default']
     AppProvider: typeof import('./src/components/Application/AppProvider.vue')['default']
+    Bar: typeof import('./src/components/Scrollbar/src/Bar.vue')['default']
     BasicHelp: typeof import('./src/components/Basic/BasicHelp.vue')['default']
     BasicModal: typeof import('./src/components/Modal/src/BasicModal.vue')['default']
     BasicTitle: typeof import('./src/components/Basic/BasicTitle.vue')['default']
@@ -21,7 +22,11 @@ declare module 'vue' {
     ModalClose: typeof import('./src/components/Modal/src/components/ModalClose.vue')['default']
     ModalFooter: typeof import('./src/components/Modal/src/components/ModalFooter.vue')['default']
     ModalHeader: typeof import('./src/components/Modal/src/components/ModalHeader.vue')['default']
+    ModalWrapper: typeof import('./src/components/Modal/src/components/ModalWrapper.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Scrollbar: typeof import('./src/components/Scrollbar/src/Scrollbar.vue')['default']
+    ScrollContainer: typeof import('./src/components/Container/src/ScrollContainer.vue')['default']
+    Thumb: typeof import('./src/components/Scrollbar/src/Thumb.vue')['default']
   }
 }

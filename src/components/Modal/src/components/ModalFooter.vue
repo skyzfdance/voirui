@@ -10,7 +10,7 @@
   import { Button } from "ant-design-vue"
   import { basicProps } from "../props"
 
-  defineOptions({ name: "ModalFooter" })
+  defineOptions({ name: "ModalFooter", inheritAttrs: false })
 
   defineProps(basicProps)
 

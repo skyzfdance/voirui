@@ -66,12 +66,17 @@ export interface ModalProps {
   showOkBtn?: boolean
   /** 是否显示取消按钮 */
   showCancelBtn?: boolean
+  /** 最小高度 */
+  minHeight?: string | number
+  /** 固定高度，全屏模式下失效 */
+  height?: string | number
 }
 /**
  * 弹窗基础方法
  */
 export interface ModalMethods {
   setModalProps: (props: Partial<ModalProps>) => void
+  redoModalHeight: () => void
 }
 
 /**
@@ -94,7 +99,6 @@ export interface useInnerMethods extends ModalMethods {
   closeModal: () => void
   changeLoading: (loading: boolean) => void
   changeConfirmLoading: (loading: boolean) => void
-  redoModalHeight: () => void
 }
 
 export type RegisterFn = (modalMethod: ModalMethods, uuid: number) => void

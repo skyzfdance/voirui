@@ -69,6 +69,10 @@ const modalProps = {
   showOkBtn: { type: Boolean, default: true },
   /** 是否显示取消按钮 */
   showCancelBtn: { type: Boolean, default: true },
+  /** 最小高度 */
+  minHeight: { type: [String, Number] as PropType<string | number> },
+  /** 固定高度 */
+  height: { type: [String, Number] },
 }
 
 export const basicProps = Object.assign({}, defaultProps, modalProps)
