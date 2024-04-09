@@ -21,7 +21,7 @@ const loadingDirective: Directive = {
         loading: !!binding.value,
         absolute: !fullscreen,
       },
-      teleport ? el : document.body,
+      teleport ? document.body : el,
     )
     el.instance = instance
   },
