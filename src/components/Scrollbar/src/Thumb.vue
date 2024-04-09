@@ -96,6 +96,11 @@
     window.getSelection()?.removeAllRanges()
 
     startDrag(e)
+
+    // 初始化滑块位置
+    const el = e.currentTarget as HTMLDivElement
+    if (!el) return
+    thumbState.value[unref(bar).axis] = el[unref(bar).offset] - (e[unref(bar).client] - el.getBoundingClientRect()[unref(bar).direction])
   }
 
   /**

@@ -1,6 +1,6 @@
 <template>
   <div :class="prefixCls" ref="scrollbarRef">
-    <div ref="wrapRef" :class="getWrapClass" :style="getWrapStyle" @scroll="handleScroll">
+    <div ref="wrapRef" :class="getWrapClass" :style="getWrapStyle" @scroll="handleScrollFn">
       <component :is="tag" :id="id" ref="resizeRef" :class="getResizeCls" :style="viewStyle">
         <slot></slot>
       </component>
@@ -17,17 +17,15 @@
   import { defaultProps } from "./props"
   import { buildClass } from "/@/hooks/useClass"
   import { isArray, isNumber, isObject } from "lodash-es"
-  import { useDebounceFn, useEventListener, useResizeObserver } from "@vueuse/core"
+  import { useEventListener, useResizeObserver } from "@vueuse/core"
   import Bar from "./Bar.vue"
   import { scrollbarContextKey } from "./constants"
 
-  defineOptions({ name: "Scrollbar", inheritAttrs: false })
+  defineOptions({ name: "Scrollbar" })
 
   const props = defineProps(defaultProps)
 
   const emits = defineEmits(["scroll"])
-
-  const handleScroll = useDebounceFn(handleScrollFn, 300)
 
   const prefixCls = buildClass("scrollbar")
 
@@ -56,7 +54,7 @@
       style.maxHeight = isNumber(props.maxHeight) ? `${props.maxHeight}px` : props.maxHeight
     }
 
-    return style
+    return { ...props.wrapStyle, ...style }
   })
 
   const getResizeCls = computed(() => {
@@ -105,7 +103,7 @@
 
   onUpdated(() => update())
 
-  defineExpose({ wrapRef, handleScroll, update, scrollTo, setScrollTop, setScrollLeft })
+  defineExpose({ wrapRef, handleScrollFn, update, scrollTo, setScrollTop, setScrollLeft })
 
   function handleScrollFn() {
     if (!unref(wrapRef)) return
