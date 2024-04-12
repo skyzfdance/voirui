@@ -1,3 +1,8 @@
+/**
+ * @file 弹窗组件类型定义
+ * @module src/components/Modal/src/typing.ts
+ */
+
 import type { ButtonProps } from "ant-design-vue/es/button/buttonTypes"
 import { type VNode, type CSSProperties } from "vue"
 
@@ -66,38 +71,55 @@ export interface ModalProps {
   showOkBtn?: boolean
   /** 是否显示取消按钮 */
   showCancelBtn?: boolean
-  /** 最小高度 */
+  /** 最小高度，全屏模式下失效，有效范围 限定为当前 ModalWrapper  */
   minHeight?: string | number
-  /** 固定高度，全屏模式下失效 */
+  /** 固定高度，全屏模式下失效，有效范围 限定为当前 ModalWrapper  */
   height?: string | number
 }
-/**
- * 弹窗基础方法
- */
+
+/** 弹窗基础方法 */
 export interface ModalMethods {
+  /**
+   * 设置弹窗属性
+   * @param props
+   * @returns
+   */
   setModalProps: (props: Partial<ModalProps>) => void
+
+  /** 更新 Modal 高度 */
   redoModalHeight: () => void
 }
 
-/**
- * 注册弹窗方法，提供给 useModal 使用
- */
+/** 注册弹窗方法，提供给 useModal 使用 */
 export interface useModalMethods extends ModalMethods {
   /**
+   * 打开弹窗
    * @param open
    * @param data 传递给弹窗内部的数据
    * @returns
    */
   openModal: (open?: boolean, data?: any) => void
+
+  /** 关闭弹窗 */
   closeModal: () => void
 }
 
-/**
- * 弹窗内部方法，提供给 useInnerModal 使用
- */
+/** 弹窗内部方法，提供给 useInnerModal 使用 */
 export interface useInnerMethods extends ModalMethods {
+  /** 关闭弹窗 */
   closeModal: () => void
+  /**
+   * 修改加载状态
+   * @param loading 更新当前 v-loading 状态
+   * @returns
+   */
   changeLoading: (loading: boolean) => void
+
+  /**
+   * 修改确认按钮加载状态，当确认按钮可用时
+   * @param loading 更新当前确认按钮 loading 状态
+   * @returns
+   */
   changeConfirmLoading: (loading: boolean) => void
 }
 

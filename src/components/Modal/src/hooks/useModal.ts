@@ -5,6 +5,24 @@ import { isEqual } from "lodash-es"
 /** 弹窗数据传输储存仓库 */
 const dataTransfer = ref<{ [key: number]: any }>({})
 
+/**
+ * Modal 外部注册
+ * @returns
+ * @description 用于外部组件注册 Modal
+ * @example
+ * ```vue
+ * <template>
+ *  <Button {@click}="openModal">打开弹窗</Button>
+ *  <XXModal {@register}="registerModal" />
+ * </template>
+ *
+ * <script setup>
+ * import { useModal } from "@/components/Modal"
+ * import XXModal from "./XXModal.vue"
+ * const [registerModal, { openModal }] = useModal()
+ * </script>
+ * ```
+ */
 export function useModal(): useModalReturnType {
   const modal = ref<ModalMethods | null>(null)
   const loaded = ref<boolean>(false) // 是否已加载
@@ -67,6 +85,23 @@ export function useModal(): useModalReturnType {
   return [register, methods]
 }
 
+/**
+ * Modal 内部注册
+ * @param callbackFn
+ * @returns
+ * @example
+ * ```vue
+ * <template>
+ *  <BasicModal {@register}="registerModal"> 内容数据 </BasicModal>
+ * </template>
+ * 
+ * <script setup>
+ * import { useModalInner, BasicModal } from "@/components/Modal"
+ * 
+ * const [registerModal, {  }] = useModalInner()
+ * </script>
+ * ```
+ */
 export function useModalInner(callbackFn?: (...arg) => void): useInnerModalReturnType {
   const modal = ref<ModalMethods | null>(null)
   const uid = ref<number>(0)
@@ -80,6 +115,11 @@ export function useModalInner(callbackFn?: (...arg) => void): useInnerModalRetur
     return unref(modal)
   }
 
+  /**
+   * 实例化
+   * @param modalMethod 组件方法 
+   * @param uuid 组件唯一标识
+   */
   function register(modalMethod: ModalMethods, uuid: number) {
     onUnmounted(() => {
       modal.value = null

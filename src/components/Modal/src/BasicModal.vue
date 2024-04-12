@@ -5,7 +5,7 @@
     </template>
 
     <template #title v-if="!$slots.title">
-      <ModalHeader :helpMessage="mergeProps.helpMessage" :title="mergeProps.title" />
+      <ModalHeader ref="modalHeaderRef" :helpMessage="mergeProps.helpMessage" :title="mergeProps.title" />
     </template>
 
     <template #footer v-if="!$slots.footer">
@@ -24,7 +24,7 @@
       :min-height="mergeProps.minHeight"
       :full-screen="fullScreenRef"
       :height="mergeProps.height"
-      :modal-footer-height="!footer ? 0 : 65"
+      :modal-footer-height="isUndefined(footer) ? 65 : 0"
       @height-change="(height: number) => emits('height-change', height)"
       @ext-height="(height: number) => (extHeightRef = height)"
     >
@@ -39,11 +39,12 @@
 
 <script setup lang="ts">
   import type { ModalMethods, ModalProps } from "./typing"
-  import { computed, getCurrentInstance, nextTick, ref, unref, useAttrs, watch, watchEffect } from "vue"
+  import { computed, getCurrentInstance, nextTick, ref, toRefs, unref, useAttrs, watch, watchEffect } from "vue"
   import { basicProps } from "./props"
   import { buildClass } from "/@/hooks/useClass"
-  import { isFunction, merge, omit } from "lodash-es"
+  import { isFunction, merge, omit, isUndefined } from "lodash-es"
   import { useFullScreen } from "./hooks/useModalFullScreen"
+  import { useModalDrag } from "./hooks/useModalDrag"
 
   import { Modal } from "ant-design-vue"
   import ModalClose from "./components/ModalClose.vue"
@@ -75,6 +76,7 @@
   const openRef = ref(false)
   const propsRef = ref<Partial<ModalProps> | null>(null)
   const modalWrapperRef = ref<InstanceType<typeof ModalWrapper> | null>(null)
+  const modalHeaderRef = ref<InstanceType<typeof ModalHeader> | null>(null)
 
   const extHeightRef = ref(0)
 
@@ -114,6 +116,8 @@
     },
     { immediate: true },
   )
+
+  useModalDrag({ open: openRef, draggable: toRefs(props).draggable, destroyOnClose: toRefs(props).destroyOnClose })
 
   /**
    * 关闭弹窗事件

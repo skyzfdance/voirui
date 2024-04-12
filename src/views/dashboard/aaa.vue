@@ -2,15 +2,12 @@
   <BasicModal
     width="800px"
     title="123123123"
+    :destroy-on-close="true"
     :help-message="['测试help-messagh', '测试机阿萨德刚与阿是', 'asdgausdgas']"
-    :footer="null"
-    height="500px"
     @register="registerModal"
     @ok="handleSubmit"
   >
-    12312312312
-
-    <template #insertFooter> insertFooter </template>
+    <div class="bg-slate-500"> insertFooter </div>
   </BasicModal>
 </template>
 

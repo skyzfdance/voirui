@@ -1,3 +1,8 @@
+/**
+ * @file Modal props 定义
+ * @module src/components/Modal/src/props.ts
+ */
+
 import type { ButtonProps } from "ant-design-vue/es/button/buttonTypes"
 import { type VNode, type CSSProperties } from "vue"
 
@@ -69,9 +74,9 @@ const modalProps = {
   showOkBtn: { type: Boolean, default: true },
   /** 是否显示取消按钮 */
   showCancelBtn: { type: Boolean, default: true },
-  /** 最小高度 */
+  /** 最小高度，有效范围 限定为当前 ModalWrapper  */
   minHeight: { type: [String, Number] as PropType<string | number> },
-  /** 固定高度 */
+  /** 固定高度，有效范围 限定为当前 ModalWrapper */
   height: { type: [String, Number] },
 }
 

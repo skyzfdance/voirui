@@ -1,3 +1,8 @@
+/**
+ * @file Modal 全屏 hook
+ * @module src/components/Modal/src/hooks/useModalFullScreen.ts
+ */
+
 import { ref, unref } from "vue"
 
 export function useFullScreen() {
