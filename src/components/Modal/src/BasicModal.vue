@@ -5,7 +5,7 @@
     </template>
 
     <template #title v-if="!$slots.title">
-      <ModalHeader ref="modalHeaderRef" :helpMessage="mergeProps.helpMessage" :title="mergeProps.title" />
+      <ModalHeader ref="modalHeaderRef" :helpMessage="mergeProps.helpMessage" :title="typeof mergeProps.title === 'string' ? mergeProps.title : ''" />
     </template>
 
     <template #footer v-if="!$slots.footer">

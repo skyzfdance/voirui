@@ -97,8 +97,8 @@ function isSameSecond(time1: number, time2: number): boolean {
 
 /**
  * 创建一个简单的定时器
- * @param fn 
- * @returns 
+ * @param fn
+ * @returns
  */
 function _simpleTick(fn: Fn) {
   return setTimeout(fn, 30)

@@ -3,7 +3,7 @@
     <template #addonAfter>
       <CountButton :size="$attrs.size" :params="params" :disabled="disabled" :count="count" :api="sendCodeApi" />
     </template>
-    <template #[item]="data" v-for="item in Object.keys($slots).filter((k) => k !== 'addonAfter')">
+    <template #[item]="data" v-for="item in Object.keys(slots).filter((k) => k !== 'addonAfter')">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
   </Input>
@@ -12,7 +12,7 @@
 <script setup lang="ts">
   import { Input } from "ant-design-vue"
   import CountButton from "./CountButton.vue"
-  import { computed } from "vue"
+  import { computed, type SetupContext, useSlots } from "vue"
   import { buildClass } from "/@/hooks/useClass"
 
   defineOptions({ inheritAttrs: false })
@@ -26,10 +26,12 @@
     /** 发送验证码接口 */
     sendCodeApi: { type: Function as PropType<() => Promise<boolean>>, default: null },
     /** 发送验证码的参数 */
-    params: { type: Object as PropType<Recordable>, default: null },
+    params: { type: Object as PropType<Recordable | null>, default: null },
   })
 
   const emits = defineEmits(["update:value", "change"])
+
+  const slots: SetupContext["slots"] = useSlots()
 
   const prefixCls = buildClass("count-down-input")
 

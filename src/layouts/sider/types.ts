@@ -1,7 +1,6 @@
-export type Key = string | number;
-
+export type Key = string | number
 
 export interface MenuState {
-  selectedKeys: Key[];
-  openKeys: Key[];
+  selectedKeys: Key[]
+  openKeys: Key[]
 }

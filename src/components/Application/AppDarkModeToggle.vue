@@ -18,6 +18,7 @@
   import Icon from "/@/components/Icon/Icon.vue"
   import { useAppStore } from "/@/stores/modules/app"
   import { ThemeEnum } from "/@/enums/appEnum"
+  import { isString } from "lodash-es"
 
   defineOptions({ inheritAttrs: false, name: "AppDarkModeToggle" })
 
@@ -26,8 +27,8 @@
 
   const getDarkMode = computed(() => appStore.getDarkMode)
 
-  function toggleDarkMode(data: ThemeEnum) {
-    appStore.setDarkMode(data)
-    updateDarkTheme(data)
+  function toggleDarkMode(checked: CheckedType) {
+    const mode = checked === ThemeEnum.DARK || checked === ThemeEnum.LIGHT ? checked : ThemeEnum.DARK
+    updateDarkTheme(mode)
   }
 </script>

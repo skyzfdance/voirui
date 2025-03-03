@@ -1,7 +1,7 @@
 import { type RouteRecordName, type RouteRecordRaw, createRouter, createWebHashHistory } from "vue-router"
 import { type MergedRoute } from "./types"
 import { baseRoutes } from "./routes"
-import { type App } from "vue";
+import { type App } from "vue"
 
 /** 路由白名单，为后续重置路由服务 */
 const WHITE_NAME_LIST: RouteRecordName[] = []

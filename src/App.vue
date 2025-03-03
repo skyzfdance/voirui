@@ -27,7 +27,7 @@
 
   const getThemeColor = computed(() => appStore.getProjectConfig.themeColor || PRIMARY_COLOR)
 
-  // 主体切换
+  // 主题切换
   const themeConfig = computed((): ThemeConfig => {
     return Object.assign(
       {

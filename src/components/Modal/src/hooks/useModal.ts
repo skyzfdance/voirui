@@ -94,10 +94,10 @@ export function useModal(): useModalReturnType {
  * <template>
  *  <BasicModal {@register}="registerModal"> 内容数据 </BasicModal>
  * </template>
- * 
+ *
  * <script setup>
  * import { useModalInner, BasicModal } from "@/components/Modal"
- * 
+ *
  * const [registerModal, {  }] = useModalInner()
  * </script>
  * ```
@@ -117,7 +117,7 @@ export function useModalInner(callbackFn?: (...arg) => void): useInnerModalRetur
 
   /**
    * 实例化
-   * @param modalMethod 组件方法 
+   * @param modalMethod 组件方法
    * @param uuid 组件唯一标识
    */
   function register(modalMethod: ModalMethods, uuid: number) {

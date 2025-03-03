@@ -7,16 +7,15 @@
 import { defineStore } from "pinia"
 import { store } from ".."
 
+// interface UserState {
+//   // 用户信息
+//   userInfo: UserInfo;
+//   // 用户权限
+//   userAuths: string[];
+//   // 用户设置
+//   userSetting: UserSetting;
 
-interface UserState {
-  // 用户信息
-  userInfo: UserInfo;
-  // 用户权限
-  userAuths: string[];
-  // 用户设置
-  userSetting: UserSetting;
-
-}
+// }
 
 export const useUserStore = defineStore("app-user", {
   state: () => ({}),

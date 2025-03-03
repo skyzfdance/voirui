@@ -5,17 +5,16 @@ import "/@/assets/less/tailwind.less"
 import App from "./App.vue"
 import { router, setupRouter } from "./router"
 import { setupGlobDirectives } from "./directives"
-import {initAppConfigStore  } from "./logics/initAppConfig";
+import { initAppConfigStore } from "./logics/initAppConfig"
 
 import { setupRouterGuard } from "./router/guard"
 
-
-;(function () {
+function main() {
   const app = createApp(App)
 
   app.use(createPinia())
 
-  initAppConfigStore();
+  initAppConfigStore()
 
   setupRouter(app)
 
@@ -24,4 +23,6 @@ import { setupRouterGuard } from "./router/guard"
   setupGlobDirectives(app)
 
   app.mount("#app")
-})()
+}
+
+main()

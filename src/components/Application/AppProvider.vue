@@ -16,11 +16,5 @@
   const appStore = useAppStore()
   const isMobile = ref(false)
   const isSetState = ref(false)
-
-
-
-
 </script>
-<style scoped lang="less">
-
-</style>
+<style scoped lang="less"></style>

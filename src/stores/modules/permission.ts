@@ -6,8 +6,8 @@ import { asyncRoutes } from "/@/router/routes"
 import { flatMultiLevelRoutes, routeToMenu } from "/@/router/menuHelper"
 
 interface PermissionState {
-  menuList: MergedRoute[];
-  isDynamicAddedRoute: boolean; // 是否已经动态添加路由 
+  menuList: MergedRoute[]
+  isDynamicAddedRoute: boolean // 是否已经动态添加路由
 }
 
 export const usePermissionStore = defineStore("app-permission", {
@@ -21,7 +21,7 @@ export const usePermissionStore = defineStore("app-permission", {
     },
     getIsDynamicAddedRoute(state) {
       return state.isDynamicAddedRoute
-    }
+    },
   },
   actions: {
     setMenuList(list: MergedRoute[]) {
@@ -55,7 +55,7 @@ export const usePermissionStore = defineStore("app-permission", {
 
       this.setMenuList(menuList)
 
-      routes = flatMultiLevelRoutes(routes);
+      routes = flatMultiLevelRoutes(routes)
       return routes
     },
   },

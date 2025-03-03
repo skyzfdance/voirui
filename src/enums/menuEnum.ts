@@ -13,27 +13,27 @@ export enum MenuModeEnum {
 /** 菜单样式类型 */
 export enum MenuTypeEnum {
   /** 左侧菜单，到顶 */
-  SIDEBAR = 'sidebar',
+  SIDEBAR = "sidebar",
   /** 顶部混合菜单模式 */
-  MIX_SIDEBAR = 'mix-sidebar',
+  MIX_SIDEBAR = "mix-sidebar",
   /** 左侧菜单，不到顶 */
-  MIX = 'mix',
+  MIX = "mix",
   /** 顶部菜单 */
-  TOP_MENU = 'top-menu',
+  TOP_MENU = "top-menu",
 }
 
 /** 菜单展开按钮显示位置 */
 export enum TriggerEnum {
   /** 不显示 */
-  NONE = 'NONE',
+  NONE = "NONE",
   /** 菜单底部 */
-  FOOTER = 'FOOTER',
+  FOOTER = "FOOTER",
   /** 头部 */
-  HEADER = 'HEADER',
+  HEADER = "HEADER",
 }
 
 /** 菜单展开按钮触发方式 */
 export enum MixSidebarTriggerEnum {
-  HOVER = 'hover',
-  CLICK = 'click',
+  HOVER = "hover",
+  CLICK = "click",
 }

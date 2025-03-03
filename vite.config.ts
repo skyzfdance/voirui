@@ -5,13 +5,13 @@
  */
 
 import { fileURLToPath, URL } from "node:url"
-
 import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import vueJsx from "@vitejs/plugin-vue-jsx"
 import Components from "unplugin-vue-components/vite"
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
 import { PREFIX_CLS } from "/@/config/project"
+import { preloadImg } from "/&/plugins/preloadImg"
 
 const { NODE_ENV } = process.env
 const isProduction = NODE_ENV === "production"
@@ -20,7 +20,14 @@ export default defineConfig({
   base: "./",
   root: fileURLToPath(new URL("./", import.meta.url)),
   server: { host: true, port: 4075 },
-  plugins: [vue(), vueJsx(), Components({ resolvers: [AntDesignVueResolver({ importStyle: false })] })],
+  plugins: [
+    vue(),
+    vueJsx(),
+    // preloadImg({
+    //   dir: "images/**/*.{jpg,jpeg,png,webp,svg,gif}",
+    // }),
+    Components({ resolvers: [AntDesignVueResolver({ importStyle: false })] }),
+  ],
   build: {
     minify: isProduction,
     outDir: fileURLToPath(new URL("./dist", import.meta.url)),
@@ -41,7 +48,9 @@ export default defineConfig({
       },
     },
   },
-  esbuild: { pure: isProduction ? ["debugger", "console.log"] : undefined },
+
+  // 不允许  debugger？？？
+  esbuild: { pure: isProduction ? ["console"] : undefined },
 
   css: {
     preprocessorOptions: {
@@ -55,8 +64,8 @@ export default defineConfig({
       "/&": fileURLToPath(new URL("./build", import.meta.url)),
     },
   },
-  test: {
-    globals: true,
-    environment: "jsdom",
-  },
+  // test: {
+  //   globals: true,
+  //   environment: "jsdom",
+  // },
 })

@@ -51,22 +51,22 @@ export interface Menu {
 
 type Component = () => Promise<typeof import("*.vue")>
 
- // @ts-ignore
+// @ts-ignore
 export interface MergedRoute extends Omit<RouteRecordRaw, "meta"> {
- /**
+  /**
    * 路由名称
    */
- name: RouteRecordName
- /**
-  * 路由元信息
-  */
- meta: RouteMeta
- /**
-  * 路由组件
-  */
- component?: Component
- /**
-  * 子路由
-  */
- children?: MergedRoute[]
+  name: RouteRecordName
+  /**
+   * 路由元信息
+   */
+  meta: RouteMeta
+  /**
+   * 路由组件
+   */
+  component?: Component
+  /**
+   * 子路由
+   */
+  children?: MergedRoute[]
 }

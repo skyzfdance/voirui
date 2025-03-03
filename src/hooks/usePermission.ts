@@ -11,10 +11,20 @@ export function usePermission() {
    * @param def 默认是否有权限
    * @returns
    */
-  function hasPermission(value: string | string[], def = true): boolean {
+  function hasPermission(value: string | string[], def = true) {
     if (!value) return def
 
     const permissions = Array.isArray(value) ? value : [value]
+    
+    if (!permissions.length) return def
+
+    return permissions.some((i) => {
+      const permission = i.trim()
+      if (permission.startsWith("!")) {
+        return !hasPermission(permission.slice(1))
+      }
+      return true
+    })
   }
 
   return { hasPermission }

@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, useSlots } from "vue"
+  import { computed, useSlots, type SetupContext } from "vue"
   import BasicHelp from "./BasicHelp.vue"
   import { buildClass } from "/@/hooks/useClass"
 
@@ -22,7 +22,7 @@
     span: { type: Boolean, default: true },
   })
 
-  const slots = useSlots()
+  const slots: SetupContext["slots"] = useSlots()
 
   const prefixCls = buildClass("basic-title")
 

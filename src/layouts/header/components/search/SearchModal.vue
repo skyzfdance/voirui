@@ -88,7 +88,7 @@
 
   const { handleSearch, keyword, searchResult, handleMouseenter, handleEnter, handleClose, activeIndex, handleUp, handleDown } = useMenuSearch(
     scrollWrap,
-    emits,
+    emits as any,
   )
 
   const getIsNotData = computed(() => !unref(keyword) || !unref(searchResult).length)

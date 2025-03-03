@@ -14,7 +14,7 @@
     /** 是否禁用 */
     disabled: { type: Boolean, default: false },
     /** 获取验证的必要参数 */
-    params: { type: Object, default: null },
+    params: { type: Object as PropType<Recordable | null>, default: null },
     /** 发送验证码接口 */
     api: { type: Function as PropType<(arg?: any) => Promise<boolean>>, default: null },
   })

@@ -10,7 +10,6 @@ export function createPermissionGuard(router: Router): void {
   const permissionStore = usePermissionStoreWithOut()
 
   router.beforeEach((to, from, next) => {
-
     // TOD
     // if (from.path === ROOT_ROUTE.path && to.path === "/dashboard") {
     //   next("/dashboard")
@@ -21,14 +20,12 @@ export function createPermissionGuard(router: Router): void {
 
     // TODO 缺少权限验证 跳转到 403页面
 
-
     // 如果是前往登录页，直接放行
-    if(from.path === "/login"){
+    if (from.path === "/login") {
       // TODO 清理掉所有的缓存数据
-      next();
-      return;
+      next()
+      return
     }
-
 
     // 如果动态路由已生成，比如说刷新页面，直接放行
     if (permissionStore.getIsDynamicAddedRoute) {

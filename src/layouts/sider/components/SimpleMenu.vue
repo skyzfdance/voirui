@@ -36,7 +36,6 @@
 
   const menuState = reactive<MenuState>({ selectedKeys: [], openKeys: [] })
 
-
   // 处理默认菜单展开逻辑，只展开一级菜单
   const path = unref(router).path
   const cur = findPath(items, (i) => i.path === path)
@@ -44,7 +43,7 @@
     menuState.selectedKeys = [path]
     if (isArray(cur)) {
       const { name } = cur[0]
-      const keys = `submenu-/${name.toString().toLowerCase()}`
+      const keys = `submenu-/${name?.toString().toLowerCase()}`
       menuState.openKeys = [keys]
     }
   }

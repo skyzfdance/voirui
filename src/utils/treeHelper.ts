@@ -66,10 +66,10 @@ export function treeMapEach<T = any>(
 
 /**
  * 树形结构查找，等用于 Array.prototype.find
- * @param tree 
- * @param func 
- * @param config 
- * @returns 
+ * @param tree
+ * @param func
+ * @param config
+ * @returns
  */
 export function findPath<T = any>(tree: T[], func: Function, config: Partial<TreeHelperConfig> = {}): T | T[] | null {
   config = getConfig(config)

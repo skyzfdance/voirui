@@ -42,7 +42,7 @@
   const getShow = computed(() => unref(getCurrentState) === LoginStateEnum.REGISTER)
 
   const getParams = computed(() => {
-    return unref(formData).mobile ? { mobile: unref(formData).mobile } : null
+    return unref(formData).mobile ? { mobile: unref(formData).mobile } : undefined
   })
 
   const rules: Record<string, Rule[]> = {

@@ -3,7 +3,7 @@
  * @module src/components/Modal/src/props.ts
  */
 
-import type { ButtonProps } from "ant-design-vue/es/button/buttonTypes"
+import type { ButtonProps, ButtonType } from "ant-design-vue/es/button/buttonTypes"
 import { type VNode, type CSSProperties } from "vue"
 
 const defaultProps = {
@@ -42,9 +42,9 @@ const defaultProps = {
   /** 确认按钮文字 */
   okText: { type: String, default: "确定" },
   /** 确认按钮类型 */
-  okType: { type: String, default: "primary" },
+  okType: { type: String as PropType<ButtonType>, default: "primary" },
   /** 标题 */
-  title: { type: String },
+  title: { type: String, default: "" },
   /** 对话框是否可见 */
   open: { type: Boolean, default: false },
   /** 宽度 */

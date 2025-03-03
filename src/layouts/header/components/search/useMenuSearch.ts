@@ -87,10 +87,10 @@ export function useMenuSearch(scrollWrap: Ref<Nullable<HTMLElement>>, emits: Emi
   let menuList: Menu[] = []
 
   onBeforeMount(() => {
-    const list = createMenus(getCurMenus());
+    const list = createMenus(getCurMenus())
     menuList = cloneDeep(list)
 
-    console.log(menuList);
+    console.log(menuList)
   })
 
   /**
@@ -158,14 +158,13 @@ export function useMenuSearch(scrollWrap: Ref<Nullable<HTMLElement>>, emits: Emi
     if (!unref(searchResult).length) return
     if (unref(activeIndex) < 0) return
 
-
     const result = unref(searchResult)
     const index = unref(activeIndex)
 
     const to = result[index]
     handleClose()
 
-    console.log(to);
+    console.log(to)
 
     nextTick(() => {
       // go(to.path)

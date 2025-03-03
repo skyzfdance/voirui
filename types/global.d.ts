@@ -7,14 +7,14 @@
 import type { PropType as VuePropType } from "vue"
 
 declare global {
-  declare type Nullable<T> = T | null | undefined
+  type Nullable<T> = T | null | undefined
 
   /** defineEmits */
-  declare type EmitType = (event: string, ...args: any[]) => void
+  type EmitType = (event: string, ...args: any[]) => void
 
-  declare type PropType<T> = VuePropType<T>
+  type PropType<T> = VuePropType<T>
 
-  declare type Recordable<T = any> = Record<string, T>
+  type Recordable<T = any> = Record<string, T>
 
   /**
    * 对象类型 T 中的所有属性变成可选，并且支持无限递归
@@ -25,7 +25,9 @@ declare global {
    * * P in keyof T: 使用映射类型语法，遍历 T 的属性，P 表示每个属性名。
    * * [P in keyof T]?: DeepPartial<T[P]>: 表示将 T 的每个属性变成可选的，并且属性的值的类型为 DeepPartial<T[P]>，这就是递归地应用了 DeepPartial 类型。
    */
-  declare type DeepPartial<T> = {
-    [P in keyof T]?: DeepPartial<T[P]>;
-  };
+  type DeepPartial<T> = {
+    [P in keyof T]?: DeepPartial<T[P]>
+  }
+
+  type CheckedType = boolean | number | string
 }

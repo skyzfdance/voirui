@@ -13,7 +13,7 @@ export function setupRouterGuard(router: Router): void {
   createScrollGuard(router)
   createMessageGuard(router)
   createStateGuard(router)
-  
+
   // 以下两个顺序不能变，必须先处理路由权限，再处理路由菜单
   createPermissionGuard(router)
   createParamMenuGuard(router)

@@ -16,8 +16,7 @@ interface AppState {
   siteInfo: SiteInfo | null
 }
 
-export const useAppStore = defineStore({
-  id: "app",
+export const useAppStore = defineStore("app", {
   state: (): AppState => ({
     darkMode: undefined,
     pageLoading: false,
@@ -29,7 +28,7 @@ export const useAppStore = defineStore({
     /** 获取页面 loading 状态 */
     getPageLoading: (state): boolean => state.pageLoading,
     /** 获取当前项目主题(浅色与暗色) */
-    getDarkMode: (state): ThemeEnum | String => state.darkMode || getCache(CacheTypeEnum.APP_DARK_MODE_KEY) || DEFAULT_THEME_MODE,
+    getDarkMode: (state): ThemeEnum | string => state.darkMode || getCache(CacheTypeEnum.APP_DARK_MODE_KEY) || DEFAULT_THEME_MODE,
 
     getBeforeMiniInfo: (state): BeforeMiniState => state.beforeMiniInfo,
     /** 获取当前项目配置 */

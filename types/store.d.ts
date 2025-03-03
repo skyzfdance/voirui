@@ -29,9 +29,9 @@ export interface SiteInfo {
 }
 
 /** 表格组件工具栏配置模型 */
-export interface TableSetting {
-  size: Nullable<SizeType>;
-  showIndexColumn: Nullable<boolean>;
-  columns: Recordable<Nullable<Array<ColumnOptionsType>>>;
-  showRowSelection: Nullable<boolean>;
-}
+// export interface TableSetting {
+//   size: Nullable<SizeType>;
+//   showIndexColumn: Nullable<boolean>;
+//   columns: Recordable<Nullable<Array<ColumnOptionsType>>>;
+//   showRowSelection: Nullable<boolean>;
+// }

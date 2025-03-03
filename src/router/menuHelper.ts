@@ -35,7 +35,7 @@ export function routeToMenu(routeModList: MergedRoute[], routerMapping = false):
       }
     },
   })
-  
+
   return cloneDeep(list)
 }
 
@@ -101,9 +101,9 @@ function promoteRouteLevel(routeModule: MergedRoute) {
 
 /**
  * 将所有子路由添加到二级路由
- * @param routes 
- * @param children 
- * @param routeModule 
+ * @param routes
+ * @param children
+ * @param routeModule
  */
 function addToChildren(routes: RouteRecordNormalized[], children: MergedRoute[], routeModule: MergedRoute) {
   for (let i = 0; i < children.length; i++) {
@@ -112,10 +112,10 @@ function addToChildren(routes: RouteRecordNormalized[], children: MergedRoute[],
     if (!route) continue
     routeModule.children = routeModule.children || []
     const curRouteModule = routeModule.children.find((item) => item.name === route.name)
-    if(!curRouteModule){
+    if (!curRouteModule) {
       routeModule.children.push(route as MergedRoute)
     }
-    if(element.children?.length){
+    if (element.children?.length) {
       addToChildren(routes, element.children, routeModule)
     }
   }

@@ -19,7 +19,7 @@ const currentState = ref(LoginStateEnum.REGISTER)
 
 /**
  * 登录组件公共数据仓库
- * @returns 
+ * @returns
  */
 export function useLogin(): {
   setLoginState: (state: LoginStateEnum) => void

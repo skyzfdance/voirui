@@ -100,7 +100,7 @@
          * getComputedStyle 获取元素的最终样式
          * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle
          */
-        const modalRect: CSSStyleDeclaration = getComputedStyle(modalDom)
+        const modalRect: CSSStyleDeclaration = getComputedStyle(modalDom!)
 
         // 获取到当前弹窗距离顶部的高度
         const modalTop = Number(modalRect.top.replace("px", ""))
