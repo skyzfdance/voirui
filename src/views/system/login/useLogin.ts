@@ -15,7 +15,7 @@ export enum LoginStateEnum {
   QR_CODE, // 二维码登录组件
 }
 
-const currentState = ref(LoginStateEnum.REGISTER)
+const currentState = ref(LoginStateEnum.LOGIN)
 
 /**
  * 登录组件公共数据仓库

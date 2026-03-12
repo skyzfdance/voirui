@@ -11,7 +11,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx"
 import Components from "unplugin-vue-components/vite"
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers"
 import { PREFIX_CLS } from "/@/config/project"
-import { preloadImg } from "/&/plugins/preloadImg"
+import vueDevTools from "vite-plugin-vue-devtools"
 
 const { NODE_ENV } = process.env
 const isProduction = NODE_ENV === "production"
@@ -20,14 +20,7 @@ export default defineConfig({
   base: "./",
   root: fileURLToPath(new URL("./", import.meta.url)),
   server: { host: true, port: 4075 },
-  plugins: [
-    vue(),
-    vueJsx(),
-    // preloadImg({
-    //   dir: "images/**/*.{jpg,jpeg,png,webp,svg,gif}",
-    // }),
-    Components({ resolvers: [AntDesignVueResolver({ importStyle: false })] }),
-  ],
+  plugins: [vue(), vueJsx(), vueDevTools(), Components({ resolvers: [AntDesignVueResolver({ importStyle: false })] })],
   build: {
     minify: isProduction,
     outDir: fileURLToPath(new URL("./dist", import.meta.url)),

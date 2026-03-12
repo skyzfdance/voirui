@@ -5,6 +5,7 @@
  */
 import type { ProjectConfig } from "/#/config"
 import { useAppStore } from "/@/stores/modules/app"
+import { useUserStore } from "/@/stores/modules/user"
 import { merge } from "lodash-es"
 import { PROJ_CFG, DEFAULT_CACHE_TIME, PREFIX_CLS } from "/@/config/project"
 import { type CacheType, getCache } from "../utils/cache"
@@ -19,11 +20,46 @@ export function initAppConfigStore(): void {
 
   appStore.setProjectConfig(projCfg)
 
-  // TODO 未完成
-
+  // 延迟执行其他初始化，避免阻塞应用启动
   setTimeout(() => {
     clearObsoleteStorage()
+    initUserInfo()
   }, 16)
+}
+
+/**
+ * 初始化用户信息
+ * @description 如果有有效的 token，自动获取用户信息
+ */
+async function initUserInfo(): Promise<void> {
+  const userStore = useUserStore()
+
+  // 检查是否有 token
+  const token = userStore.getToken
+  if (!token) {
+    return
+  }
+
+  // 检查 token 是否过期
+  const expires = (getCache(CacheTypeEnum.TOKEN_EXPIRES_KEY) as number) || 0
+  if (expires && expires < Date.now()) {
+    console.log("[Init] Token 已过期，跳过获取用户信息")
+    return
+  }
+
+  // 如果已经有用户信息，不需要重复获取
+  if (userStore.getUserInfo) {
+    return
+  }
+
+  try {
+    console.log("[Init] 自动获取用户信息...")
+    await userStore.fetchUserInfo()
+    console.log("[Init] 用户信息获取成功")
+  } catch (error) {
+    console.error("[Init] 获取用户信息失败:", error)
+    // 获取失败不处理，让路由守卫去处理跳转逻辑
+  }
 }
 
 /** 清理过期缓存 */

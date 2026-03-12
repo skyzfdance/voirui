@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-  import { Icon, disableCache } from "@iconify/vue"
+  import { Icon, } from "@iconify/vue"
   import { computed } from "vue"
   import { isNumber } from "lodash-es"
 
@@ -18,10 +18,6 @@
     /** 图标前缀 */
     prefix: { type: String, default: "" },
   })
-
-  // 禁用全部缓存，禁止将图标缓存在 localStorage/sessionStorage 中
-  // 每次都从服务器上拉取数据，已减少图标更新后，无法及时更新的问题，并且减少本地存储的大小
-  disableCache("all")
 
   const getWrapStyle = computed(() => {
     const { size, color } = props

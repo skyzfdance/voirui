@@ -34,14 +34,18 @@
 <script setup lang="ts">
   import { type Rule } from "ant-design-vue/es/form/interface"
   import { computed, onMounted, ref, unref } from "vue"
+  import { useRouter } from "vue-router"
   import LoginFormTitle from "./LoginFormTitle.vue"
   import { LoginStateEnum, useLogin } from "../useLogin"
   import { Form, FormItem, Row, Col, Button, Input, InputPassword, Checkbox } from "ant-design-vue"
   import { getCache, removeCache, setCache } from "/@/utils/cache"
   import { CacheTypeEnum } from "/@/enums/cacheEnum"
   import { isObject } from "lodash-es"
+  import { useUserStore } from "/@/stores/modules/user"
 
   const { getCurrentState, setLoginState } = useLogin()
+  const userStore = useUserStore()
+  const router = useRouter()
 
   const formData = ref({ account: "", password: "" })
   const memory = ref(false)
@@ -50,7 +54,7 @@
 
   const rules: Record<string, Rule[]> = {
     account: [{ required: true, message: "请输入登录账户", trigger: "blur" }],
-    password: [{ required: true, message: "请输入登录账户", trigger: "blur" }],
+    password: [{ required: true, message: "请输入登录密码", trigger: "blur" }],
   }
 
   onMounted(() => {
@@ -69,10 +73,17 @@
   async function handlelogin() {
     try {
       loading.value = true
+
+      // 调用登录接口
+      await userStore.login(unref(formData).account, unref(formData).password)
+
       // 记录账号 或者 删除记录
       unref(memory) ? setCache(CacheTypeEnum.MEMORY_ACCOUNT_KEY, { account: unref(formData).account }) : removeCache(CacheTypeEnum.MEMORY_ACCOUNT_KEY)
+
+      // 登录成功后跳转到首页
+      router.replace("/")
     } catch (error) {
-      console.error("login error")
+      console.error("login error:", error)
     } finally {
       loading.value = false
     }
