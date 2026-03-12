@@ -1,0 +1,9 @@
+# Test files
+**/__tests__/**
+
+# Build
+dist/
+coverage/
+
+# Dependencies
+node_modules/

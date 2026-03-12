@@ -112,7 +112,7 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* 是否关闭对 d.ts 文件类型检查，false 会导致编译速度降低，特别是用了大量第三方库的时候,但是这里有个理解问题，设置为false，哪怕是配置了exclude: [],实际在项目中有使用了第三方库，也会被编译，只是不会执行 */
   },
-  "exclude": [] /* 不要将指定目录下的文件视为项目源码,但它不会阻止 TypeScript 解析依赖的类型声明文件 */,
+  "exclude": ["**/__tests__/**", "node_modules"] /* 不要将指定目录下的文件视为项目源码,但它不会阻止 TypeScript 解析依赖的类型声明文件 */,
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",

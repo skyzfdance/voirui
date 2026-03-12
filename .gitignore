@@ -29,3 +29,6 @@ coverage
 
 # .qoder
 .qoder/repowiki/
+
+# Test files
+__tests__/
